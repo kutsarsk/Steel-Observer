@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<head>
+    <meta charset="UTF-8">
+    <title>Home page</title>
+</head>
+<body>
+    {% if records %}
+        <p>
+            Explore the market information in our database.
+        </p>
+        
+        {% include 'records/record_table.html' %}
+
+    {% else %}
+        <p>
+            There are no records yet. Be the first to add one!
+        </p>
+    {% endif %}
+</body>
+
+
+{% endblock %}

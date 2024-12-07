@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div>
+        <h2>Delete record</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="delete-btn" type="submit">Delete</button>
+            <a href="{% url 'record-details' record.pk %}" class="go-back-btn">Go back</a>
+        </form>
+    </div>
+
+{% endblock %}

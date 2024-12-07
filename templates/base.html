@@ -1,0 +1,109 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{% static 'css/common.css' %}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.2/css/all.css">
+    <title>Steel Observer</title>
+</head>
+<body>
+
+<header>
+    
+        <div class="page-head">
+            <a href="{% url 'home' %}">
+                Steel Observer
+            </a>
+        </div>
+
+        <div class="user-id">
+            {% if authenticated %}
+                {{ user.email }}
+            {% else %}
+                    Anonymous user
+            {% endif %}
+        </div>
+
+        <nav class="navbar">
+
+            <div class="nav-links">
+                <ul>
+                    <li class="home-icon">
+                        <a href="{% url 'home' %}">
+                            <i class="fa fa-home fa-fw"></i>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        {% if authenticated %}
+                            {% block nav_extra %}
+                            {% endblock %}
+                        {% endif %}
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'record-list' %}">
+                            Records
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        
+                        <a href="{% url 'product-list' %}">
+                            Products
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{% url 'event-list' %}">
+                            Events
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{% url 'company-list' %}">
+                            Companies
+                        </a>
+                    </li>
+
+                    {% if not authenticated %}
+                        <li class="nav-item">
+                            <a href="{% url 'login' %}">
+                                Login
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'register' %}">
+                                Register
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a href="{% url 'profile-details' request.user.pk %}">
+                                Profile  
+                            </a>
+                        </li>
+
+                        <form method="post" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <button class="button" type="submit"><i>Logout</i></button>
+                        </form>
+                    {% endif %}
+                </ul>
+            </div>
+    </nav>
+</header>
+
+<main>
+
+    {% block content %}
+    {% endblock %}
+
+</main>
+
+<div class="footer">
+       <span class="footer-section">
+           <p>
+               © 2024 Steel Observer
+           </p>
+       </span>
+</div>

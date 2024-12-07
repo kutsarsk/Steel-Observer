@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div>
+
+        <form>
+            <h2>Delete product</h2>
+            <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="delete-btn" type="submit">Delete</button>
+            <button class="edit-btn" type="button">Go back</button>
+        </form>
+    </div>
+
+{% endblock %}

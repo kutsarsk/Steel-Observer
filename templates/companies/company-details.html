@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    
+{% if user_created_company %} 
+    {% block nav_extra %}
+        <li class="nav-item">
+            <a href="{% url 'company-edit' company.pk %}">
+                <i>Edit company</i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'company-delete' company.pk %}">
+                <i>Delete company</i>
+            </a>
+        </li>
+    {% endblock %}
+{% endif %}    
+
+<div>
+
+    <p>
+        <b>Company details:</b>
+    </p>
+    
+<h2>    
+    <p>
+        {{ company.name }}
+    </p>
+</h2>    
+    <p>
+        Location: {{ company.location }}
+    </p>
+    <p>
+        Business field: {{ company.business_field }}
+    </p>
+    <p>
+        Products:
+    </p>
+    <p>
+        {{ company.products }}
+    </p>
+</div>
+    
+    <form action="{% url 'company-edit' company.pk %}" method="get">
+        <button type="submit" class="btn-company-edit">Edit company</button>
+    </form>
+
+{% endblock %}

@@ -1,0 +1,26 @@
+{% load pagination_tags %}
+<table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Region</th>
+                    <th>Product type</th>
+                    <th>Quantity, metric tons</th>
+                    <th>Currency</th>
+                    <th>Price per metric ton</th>
+                    <th>Transaction type</th>
+                </tr>
+            </thead>
+            {% for record in records %}
+                <tr>
+                        <td><a href="{% url 'record-details' record.pk %}"><i>{{ record.date|date:'d.m.Y' }}</i></a></td>
+                        <td><a href="{% url 'record-details' record.pk %}"><i>{{ record.region }}</i></a></td>
+                        <td><a href="{% url 'record-details' record.pk %}"><i>{{ record.product.name }}</i></a></td>
+                        <td><a href="{% url 'record-details' record.pk %}"><i>{{ record.quantity }}</i></a></td>
+                        <td><a href="{% url 'record-details' record.pk %}"><i>{{ record.currency }}</i></a></td>
+                        <td><a href="{% url 'record-details' record.pk %}"><i>{{ record.price }}</i></a></td>
+                        <td><a href="{% url 'record-details' record.pk %}"><i>{{ record.type }}</i></a></td>
+                </tr>
+            {% endfor %}
+</table>
+{% render_pagination page_obj %}

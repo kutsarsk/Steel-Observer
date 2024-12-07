@@ -14,9 +14,23 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+
+from Steel_Observer.common.views import HomePageView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', HomePageView.as_view(), name='home'),
+    path('accounts/', include('Steel_Observer.accounts.urls')),
+    path('companies/', include('Steel_Observer.companies.urls')),
+    path('events/', include('Steel_Observer.events.urls')),
+    path('products/', include('Steel_Observer.products.urls')),
+    path('records/', include('Steel_Observer.records.urls')),
 ]
+
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

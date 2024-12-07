@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+
+    {% block nav_extra %}
+        <li class="nav-item">
+            <a href="{% url 'event-create' %}">
+                <i>Add Event</i>
+            </a>
+        </li>
+    {% endblock %}
+
+{% block content %}
+    
+<body>
+    {% if events %}
+        Below are the latest events in our database.
+        {% for event in events %}
+            <a href="{% url 'event-details' %}">
+                <i>{{ event.name }} -- {{ event.date }} -- {{ event.place }}</i>
+            </a>
+        {% endfor %}
+    {% else %}
+        There are no events yet. Be the first to add one!
+    {% endif %}
+</body>
+    
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div>
+    <p>
+        {{ event.name }}
+    </p>
+    <p>
+        on {{ event.date }}, at {{ event.place }}
+    </p>
+    <p>
+        {{ event.description }}
+    </p>
+</div>
+
+{% endblock %}
