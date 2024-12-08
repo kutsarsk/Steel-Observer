@@ -4,9 +4,11 @@
 {% block content %}
 
 <div>
-    <p>
-        {{ event.name }}
-    </p>
+    <h2>
+        <p>
+            {{ event.name }}
+        </p>
+    </h2>
     <p>
         on {{ event.date }}, at {{ event.place }}
     </p>
@@ -14,5 +16,14 @@
         {{ event.description }}
     </p>
 </div>
+    
+    {% if user_created_event %}
+        <form action="{% url 'event-edit' pk=event.pk %}" method="get">
+            <button type="submit" class="btn-event-edit">Edit event</button>
+        </form>
+        <form action="{% url 'event-delete' pk=event.pk %}" method="get">
+            <button type="submit" class="btn-event-delete">Delete event</button>
+        </form>
+    {% endif %}
 
 {% endblock %}

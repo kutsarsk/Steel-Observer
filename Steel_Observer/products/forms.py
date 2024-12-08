@@ -13,7 +13,6 @@ class ProductForm(forms.ModelForm):
         }
 
 
-
 class ProductCreateForm(ProductForm):
     pass
 

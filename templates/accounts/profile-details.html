@@ -4,13 +4,6 @@
 {% block content %}
 
 <div>
-    {% if profile.profile_picture %}
-        <p>
-            <img src="{{ profile.picture_picture }}" alt="no picture available"/>
-        </p>
-    {% else %}    
-        <img src="{% static 'images/profile_picture.png' %}" alt="no picture available" />
-    {% endif %}
     <p>
         {{ profile.first_name }} {{ profile.last_name }} 
     </p>
@@ -18,9 +11,20 @@
         {{ profile.role }}
     </p>
     <form action="{% url 'profile-edit' pk=user.pk %}" method="get">
-        <button type="submit" class="btn-profile-edit">Edit Profile</button>
+        <button type="submit" class="btn-profile-edit">Edit profile</button>
     </form>
-
+    <form action="{% url 'profile-delete' pk=user.pk %}" method="get">
+        <button type="submit" class="btn-profile-delete">Delete profile</button>
+    </form>
 </div>
+    
+<div>
+    {% if records %}
+        <h3>
+            Below are the records you have submitted.
+        </h3>
+        {% include 'records/record_table.html'  %}
+    {% endif %}
+</div>    
 
 {% endblock %}

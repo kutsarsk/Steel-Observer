@@ -1,21 +1,18 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block nav_extra %}
-    <li class="nav-item">
-        <a href="{% url 'product-create' %}">
-            Add product
-        </a>
-    </li>
-{% endblock %}
-
 {% block content %}
     
 <body>
     {% if products %}
         <p>
-            Below are the products in our database.
+            Below are {{ product_count }} products in our database.
         </p>
+        
+        <form action="{% url 'product-create' %}" method="get">
+            <button type="submit" class="btn">Add product</button>
+        </form>
+        
         {% for product in products %}
             <p>
                 <a href="{% url 'product-details' product.pk %}">
@@ -27,7 +24,38 @@
         <p>
             There are no products yet. Be the first to add one!
         </p>
+        <form action="{% url 'product-create' %}" method="get">
+            <button type="submit" class="btn">Add product</button>
+        </form>
     {% endif %}
+
+{% if is_paginated %}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo;  first </a>
+            <a href="?page={{ page_obj.previous_page_number }}"> previous </a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}"> next </a>
+            <a href="?page={{ page_obj.paginator.num_pages }}"> last  &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+    
+{% else %}  
+    <p>
+        Page 1 of 1
+    </p>
+
+{% endif %}
+
 </body>
     
 {% endblock %}

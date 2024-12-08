@@ -7,11 +7,22 @@
 
         <form>
             <h2>Delete profile</h2>
+            <p>
+                Are you sure you want to delete your profile?
+            </p>
+            <p>
+                If you do it, all the content you have added will be deleted too.
+            </p>
+            <p>
+                Deleting your profile cannot be undone.
+            </p>
             <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <button class="delete-btn" type="submit">Delete</button>
-            <button class="edit-btn" type="button">Go back</button>
+            <button class="delete-btn" type="submit">Delete profile</button>
+            <a href="{% url 'profile-details' profile.pk %}" >   
+                <button class="btn" type="button">Go back</button>
+            </a>    
         </form>
     </div>
 

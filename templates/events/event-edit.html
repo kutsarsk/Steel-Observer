@@ -9,9 +9,12 @@
         <form method="POST">
             {% csrf_token %}
             {{ form }}
-            <button class="edit-btn" type="submit">Edit</button>
+            <button class="edit-btn" type="submit">Edit event</button>
+            <a href="{% url 'event-details' event.pk %}" >   
+                <button class="btn" type="button">Go back</button>
+            </a>
         </form>
         
-    </div>
+ </div>
 
 {% endblock %}

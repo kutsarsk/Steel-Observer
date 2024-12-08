@@ -2,21 +2,18 @@
 {% load static %}
 
 
-{% block nav_extra %}
-    <li class="nav-item">
-        <a href="{% url 'record-create' %}">
-            Add record
-        </a>
-    </li>
-{% endblock %}
-
 {% block content %}
     
 <body>
     {% if records %}
         <p>
-            Explore {{ records.count }} records available in our database.
+            Explore {{ record_count }} records available in our database.
         </p>
+        
+        <form action="{% url 'record-create' %}" method="get">
+            <button type="submit" class="btn">Add record</button>
+        </form>
+        
         {% include 'records/record_table.html' %}
     {% else %}
         <p>

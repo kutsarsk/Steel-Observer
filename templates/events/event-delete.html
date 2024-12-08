@@ -4,14 +4,15 @@
 {% block content %}
 
     <div>
-
-        <form>
-            <h2>Delete event</h2>
-            <form method="post">
+    
+        <h2>Delete event</h2>
+        <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <button class="delete-btn" type="submit">Delete</button>
-            <button class="edit-btn" type="button">Go back</button>
+            <button class="delete-btn" type="submit">Delete event</button>
+            <a href="{% url 'event-details' event.pk %}" >   
+                <button class="btn" type="button">Go back</button>
+            </a>
         </form>
     </div>
 

@@ -4,13 +4,14 @@
 {% block content %}
 
     <div>
-
-        <form>
-            <h2>Add event</h2>
-            <form method="post">
+        <h2>Add event</h2>
+        <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
             <button class="add-btn" type="submit">Add</button>
+            <a href="{% url 'event-list' %}" >   
+                <button class="btn" type="button">Go back</button>
+            </a>
         </form>
     </div>
 

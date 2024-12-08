@@ -1,13 +1,19 @@
-from django.forms import ModelForm
+from django import forms
 
 from Steel_Observer.events.models import Event
 
 
-class EventForm(ModelForm):
+class EventForm(forms.ModelForm):
 
     class Meta:
         model = Event
-        fields = '__all__'
+        exclude = ('user',)
+        widgets = {
+            'name': forms.TextInput(attrs={'placeholder': 'event name'}),
+            'date': forms.DateInput(attrs={'type': 'date'}),
+            'place': forms.TextInput(attrs={'placeholder': 'event place'}),
+            'description': forms.TextInput(attrs={'placeholder': 'event description'}),
+        }
 
 
 class EventCreateForm(EventForm):

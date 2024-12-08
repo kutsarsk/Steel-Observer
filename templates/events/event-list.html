@@ -1,27 +1,62 @@
 {% extends 'base.html' %}
 {% load static %}
 
-    {% block nav_extra %}
-        <li class="nav-item">
-            <a href="{% url 'event-create' %}">
-                <i>Add Event</i>
-            </a>
-        </li>
-    {% endblock %}
-
 {% block content %}
     
 <body>
     {% if events %}
-        Below are the latest events in our database.
+        <p>
+            Below are {{ events.count }} events in our database.
+        </p>
+        <form action="{% url 'event-create' %}" method="get">
+            <button type="submit" class="btn">Add event</button>
+        </form>
+
         {% for event in events %}
-            <a href="{% url 'event-details' %}">
-                <i>{{ event.name }} -- {{ event.date }} -- {{ event.place }}</i>
-            </a>
+            <p>
+                <a href="{% url 'event-details' event.pk %}">
+                    <i>{{ event.name }} -- {{ event.date }} -- {{ event.place }}</i>
+                </a>
+            </p>
         {% endfor %}
+
     {% else %}
-        There are no events yet. Be the first to add one!
+        <p>
+            There are no events yet. Be the first to add one!
+        </p>
+        <form action="{% url 'event-create' %}" method="get">
+            <button type="submit" class="btn">Add event</button>
+        </form>
+
     {% endif %}
+
+{% if is_paginated %}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo;  first </a>
+            <a href="?page={{ page_obj.previous_page_number }}"> previous </a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}"> next </a>
+            <a href="?page={{ page_obj.paginator.num_pages }}"> last  &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+    
+{% else %}  
+    <p>
+        Page 1 of 1
+    </p>
+
+{% endif %}
+
 </body>
     
 {% endblock %}

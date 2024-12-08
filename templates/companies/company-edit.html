@@ -4,12 +4,15 @@
 {% block content %}
 
  <div class="edit-delete">
-        <h2>Edit Company</h2>
+        <h2>Edit company</h2>
         
         <form method="POST">
             {% csrf_token %}
             {{ form }}
             <button class="edit-btn" type="submit">Edit</button>
+            <a href="{% url 'company-details' company.pk %}" >   
+                <button class="btn" type="button">Go back</button>
+            </a>
         </form>
         
     </div>

@@ -7,18 +7,41 @@
     <title>Home page</title>
 </head>
 <body>
-    {% if records %}
+    <h2>
+    
+    {% if user.is_authenticated %}
         <p>
-            Explore the market information in our database.
+            Welcome, {{ user.profile.first_name }} {{ user.profile.last_name }}!
         </p>
-        
-        {% include 'records/record_table.html' %}
-
-    {% else %}
+    {% endif %}
+    
+        <p>
+            Obtain reliable market information and gain valuable insights from our database.
+        </p>
+        {% if records %}
+            <p>
+                {{ records.count }} records are at your disposal and new ones are added every day.
+            </p>
+        {% else %}
         <p>
             There are no records yet. Be the first to add one!
         </p>
+            {% endif %}
+    
+    {% if not user.is_authenticated %}
+        <p>
+            Become part of our community and contribute to the project by sharing new data!
+        </p>
+    {% else %} 
+        <p>
+            Contribute to the project by sharing new data!
+        </p>
     {% endif %}
+        
+    </h2>
+
+
+
 </body>
 
 

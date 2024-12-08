@@ -34,4 +34,4 @@ class Profile(models.Model):
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     role = models.CharField(max_length=30, choices=Roles.choices, default=Roles.UNKNOWN)
-    profile_picture = models.ImageField(upload_to='profile_pictures/', null=True, blank=True)
+

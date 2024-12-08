@@ -10,6 +10,9 @@
             {% csrf_token %}
             {{ form.as_p }}
             <button class="edit-btn" type="submit">Edit</button>
+            <a href="{% url 'record-details' record.pk %}" >   
+                <button class="btn" type="button">Go back</button>
+            </a>
         </form>
         
     </div>

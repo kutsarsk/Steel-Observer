@@ -2,31 +2,23 @@
 
 {% load static %}
 
-{% block nav_extra %}
-        <li class="nav-item">
-            <a href="{% url 'company-create' %}">
-                <i>Add company</i>
-            </a>
-        </li>
-{% endblock %}
-
 {% block content %}
     
 <body>
-    {% if companies %}
+{% if companies %}
         <p>
-            Below are the companies in our database.
+            Below are {{ companies.count }} companies in our database.
         </p>
-        {% for company in companies %}
-        <p>    
-            <a href="{% url 'company-details' company.pk %}">
-                <i>{{ company.name }} based in {{ company.location }} -- business field: {{ company.business_field }}</i>
-            </a>
+        <form action="{% url 'company-create' %}" method="get">
+            <button type="submit" class="btn">Add company</button>
+        </form>
+        <p>
+            {% include 'companies/company-table.html' %}
         </p>    
-        {% endfor %}
-    {% else %}
+
+{% else %}
         There are no companies yet. Be the first to add one!
-    {% endif %}
+{% endif %}
 </body>
     
 {% endblock %}

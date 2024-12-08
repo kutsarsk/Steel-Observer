@@ -2,21 +2,6 @@
 {% load static %}
 
 {% block content %}
-    
-{% if user_created_company %} 
-    {% block nav_extra %}
-        <li class="nav-item">
-            <a href="{% url 'company-edit' company.pk %}">
-                <i>Edit company</i>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="{% url 'company-delete' company.pk %}">
-                <i>Delete company</i>
-            </a>
-        </li>
-    {% endblock %}
-{% endif %}    
 
 <div>
 
@@ -42,9 +27,17 @@
         {{ company.products }}
     </p>
 </div>
+   
+{% if user_created_company %} 
     
     <form action="{% url 'company-edit' company.pk %}" method="get">
         <button type="submit" class="btn-company-edit">Edit company</button>
     </form>
+    
+    <form action="{% url 'company-delete' pk=company.pk %}" method="get">
+            <button type="submit" class="btn-company-delete">Delete company</button>
+    </form>
+
+{% endif %}    
 
 {% endblock %}

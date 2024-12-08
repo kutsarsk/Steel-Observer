@@ -1,23 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% if record.user_created_record %}
-    {% block nav_extra %}
-    <li class="nav-item">
-        <a href="{% url 'record-edit' record.pk %}">
-            Edit record
-        </a>
-    </li>
-    <li class="nav-item">
-        <a href="{% url 'record-delete' record.pk %}">
-            Delete record
-        </a>
-    </li>
-{% endblock %}
-
-
-{% endif %}
-
 {% block content %}
 
 <div>
@@ -25,5 +8,15 @@
         {{ record }}
     </p>
 </div>
+
+    {% if user_created_record %}
+        <form action="{% url 'record-edit' pk=record.pk %}" method="get">
+            <button type="submit" class="btn-record-edit">Edit record</button>
+        </form>
+        <form action="{% url 'record-delete' pk=record.pk %}" method="get">
+            <button type="submit" class="btn-record-delete">Delete record</button>
+        </form>
+    {% endif %}    
+    
 
 {% endblock %}

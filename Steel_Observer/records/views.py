@@ -1,8 +1,10 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, get_object_or_404
+from django.core.exceptions import PermissionDenied
+from django.core.paginator import Paginator
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, UpdateView, DeleteView, ListView
 
+from Steel_Observer.permissions import PermissionMixin
 from Steel_Observer.records.forms import RecordCreateForm, RecordEditForm, RecordDeleteForm
 from Steel_Observer.records.models import Record
 
@@ -32,20 +34,16 @@ class RecordDetailsView(DetailView):
     model = Record
     template_name = 'records/record-details.html'
 
-    def user_created_record(self):
-        record = get_object_or_404(Record)
-        return self.request.user == record.user
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context['user_created_record'] = self.get_object().user == self.request.user
+        return context
 
 
-class RecordEditView(LoginRequiredMixin, UpdateView):
-
+class RecordEditView(LoginRequiredMixin, PermissionMixin, UpdateView):
     model = Record
     form_class = RecordEditForm
     template_name = 'records/record-edit.html'
-
-    def user_created_record(self):
-        record = get_object_or_404(Record)
-        return self.request.user == record.user
 
     def form_valid(self, form):
         record = form.save(commit=False)
@@ -60,8 +58,13 @@ class RecordEditView(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy('record-list')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context['user_created_record'] = self.get_object().user == self.request.user
+        return context
 
-class RecordDeleteView(LoginRequiredMixin, DeleteView):
+
+class RecordDeleteView(LoginRequiredMixin, PermissionMixin, DeleteView):
 
     model = Record
     template_name = 'records/record-delete.html'
@@ -69,10 +72,6 @@ class RecordDeleteView(LoginRequiredMixin, DeleteView):
 
     def get_success_url(self):
         return reverse_lazy('record-list')
-
-    def user_created_record(self):
-        record = get_object_or_404(Record)
-        return self.request.user == record.user
 
     def get_initial(self):
         obj = self.get_object()
@@ -84,15 +83,25 @@ class RecordDeleteView(LoginRequiredMixin, DeleteView):
             field.disabled = True
         return form
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context['user_created_record'] = self.get_object().user == self.request.user
+        return context
+
 
 class RecordListView(ListView):
 
     model = Record
     template_name = 'records/record-list.html'
+    paginate_by = 10
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
-        context['records'] = Record.objects.all().order_by('-date', 'product', 'region', 'type', 'pk')
+        all_records = Record.objects.all().order_by('-date', 'product', 'region', 'type', 'pk')
+        paginator = Paginator(all_records, self.paginate_by)
+        page = self.request.GET.get('page')
+        context['records'] = paginator.get_page(page)
+        context['record_count'] = all_records.count()
         return context
 
-    paginate_by = 10
+
