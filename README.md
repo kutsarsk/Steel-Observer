@@ -10,3 +10,12 @@ The project has been developed with steel trade in mind (hence the title) but th
 In a next stage, the functionality will be elaborated by adding more sophisticated statistical analysis tools.
 
 
+
+
+### For examiners only
+
+Get environment variables from this link:
+
+https://drive.google.com/file/d/1QE8H-ttFLNA1TzZ7yOrYXU1PaDC9pkOX/view?usp=sharing
+
+

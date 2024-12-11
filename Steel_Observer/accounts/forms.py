@@ -1,8 +1,8 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm, AuthenticationForm, PasswordChangeForm
 from django.contrib.auth import get_user_model
 
-from Steel_Observer.accounts.models import Profile
+from Steel_Observer.accounts.models import Profile, AppUser
 
 UserModel = get_user_model()
 
@@ -39,3 +39,10 @@ class ProfileEditForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['first_name', 'last_name', 'role']
+
+
+class UserPasswordChangeForm(PasswordChangeForm):
+
+    class Meta:
+        model = AppUser
+        fields = ['password1', 'password2']

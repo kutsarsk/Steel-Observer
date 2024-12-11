@@ -1,12 +1,13 @@
-from django.contrib.auth import get_user_model, login
+from django.contrib import messages
+from django.contrib.auth import get_user_model, login, update_session_auth_hash
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.core.paginator import Paginator
 from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
+from django.views.generic import CreateView, DetailView, UpdateView, DeleteView, FormView
 
-from Steel_Observer.accounts.forms import AppUserCreationForm, ProfileEditForm
-from Steel_Observer.accounts.models import Profile
+from Steel_Observer.accounts.forms import AppUserCreationForm, ProfileEditForm, UserPasswordChangeForm
+from Steel_Observer.accounts.models import Profile, AppUser
 from Steel_Observer.permissions import SuperPermissionMixin
 from Steel_Observer.records.models import Record
 
@@ -85,3 +86,23 @@ class ProfileDeleteView(SuperPermissionMixin, DeleteView):
     template_name = 'accounts/profile-delete.html'
     success_url = reverse_lazy('login')
 
+
+class PasswordChangeView(LoginRequiredMixin, FormView):
+
+    model = AppUser
+    form_class = UserPasswordChangeForm
+    template_name = 'accounts/password-change.html'
+
+    def get_form(self, form_class=None):
+        if form_class is None:
+            form_class = self.get_form_class()
+        return form_class(user=self.request.user, **self.get_form_kwargs())
+
+    def form_valid(self, form):
+        form.save()
+        update_session_auth_hash(self.request, form.user)
+        messages.success(self.request, "Your password has been changed successfully!")
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('profile-details', kwargs={'pk': self.request.user.pk})
