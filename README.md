@@ -11,11 +11,3 @@ In a next stage, the functionality will be elaborated by adding more sophisticat
 
 
 
-
-### For examiners only
-
-Get environment variables from this link:
-
-https://drive.google.com/file/d/1QE8H-ttFLNA1TzZ7yOrYXU1PaDC9pkOX/view?usp=sharing
-
-
